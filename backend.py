@@ -4,9 +4,15 @@ from config import GEMINI_API_KEY
 client = genai.Client(api_key=GEMINI_API_KEY)
 
 # Function which sends the input and prompt to Gemini and returns the output
-def review_code(code):
+def review_code(code, language = "Python"):
+
+    # Checks for empty input
+    if not code.strip():
+        return "Please enter some code to review."
+    
     prompt = f"""
-You are an expert code reviewer. Review the following code and structure your feedback into these sections:
+You are an expert code reviewer. Review the following code written in {language} and 
+structure your feedback into these sections:
 
 1. Bugs — any errors, incorrect behavior, logical loopholes
 2. Readability — naming, formatting, clarity
