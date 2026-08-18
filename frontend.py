@@ -4,7 +4,7 @@ import re
 
 app = ctk.CTk()
 app.title("AI Code Review Assistant")
-app.geometry("1000x1000")
+app.geometry("800x750")
 
 # Label above the input box
 input_label = ctk.CTkLabel(app, text="Paste your code below:")
@@ -14,24 +14,29 @@ input_label.pack(pady=(10, 0))
 code_input = ctk.CTkTextbox(app, width=700, height=300)
 code_input.pack(pady=10)
 
+# Language dropdown
+language_menu = ctk.CTkOptionMenu(app, values=["Python", "Java", "C++", "JavaScript", "C#"])
+language_menu.pack(pady=(0, 10))
+
 
 # Removes common Markdown symbols so plain text displays cleanly
 def clean_markdown(text):
-    text = re.sub(r"```[a-zA-Z]*\n?", "", text)   # code block markers
-    text = re.sub(r"\*\*(.*?)\*\*", r"\1", text)   # bold **text**
-    text = re.sub(r"#{1,6}\s*", "", text)          # headers
-    text = re.sub(r"^\s*[-*]\s+", "- ", text, flags=re.MULTILINE)  # bullet points
-    text = re.sub(r"\$(.*?)\$", r"\1", text)       # LaTeX math notation like $O(1)$
-    text = text.replace("\\mathcal{O}", "O")       # LaTeX big-O notation
-    text = text.replace(""", '"').replace(""", '"')  # smart double quotes
-    text = text.replace("'", "'").replace("'", "'")  # smart single quotes
+    text = re.sub(r"```[a-zA-Z]*\n?", "", text)
+    text = re.sub(r"\*\*(.*?)\*\*", r"\1", text)
+    text = re.sub(r"#{1,6}\s*", "", text)
+    text = re.sub(r"^\s*[-*]\s+", "- ", text, flags=re.MULTILINE)
+    text = re.sub(r"\$(.*?)\$", r"\1", text)
+    text = text.replace("\\mathcal{O}", "O")
+    text = text.replace(""", '"').replace(""", '"')
+    text = text.replace("'", "'").replace("'", "'")
     return text
 
 
 # Runs when the "Review Code" button is clicked
 def on_review_click():
     code = code_input.get("1.0", "end")
-    result = review_code(code)
+    language = language_menu.get()
+    result = review_code(code, language=language)
     result = clean_markdown(result)
 
     output_box.configure(state="normal")
@@ -49,7 +54,7 @@ output_label = ctk.CTkLabel(app, text="Review:")
 output_label.pack(pady=(10, 0))
 
 # Output box to display Gemini's review
-output_box = ctk.CTkTextbox(app, width=700, height=700)
+output_box = ctk.CTkTextbox(app, width=700, height=350)
 output_box.pack(pady=10)
 output_box.configure(state="disabled")
 
