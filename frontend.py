@@ -36,6 +36,10 @@ upload_button.pack(pady=(0, 10))
 language_menu = ctk.CTkOptionMenu(app, values=["Python", "Java", "C++", "JavaScript", "C#"])
 language_menu.pack(pady=(0, 10))
 
+# Status label (shows loading/progress messages)
+status_label = ctk.CTkLabel(app, text="")
+status_label.pack(pady=(0, 5))
+
 
 # Removes common Markdown symbols so plain text displays cleanly
 def clean_markdown(text):
@@ -52,6 +56,9 @@ def clean_markdown(text):
 
 # Runs when the "Review Code" button is clicked
 def on_review_click():
+    status_label.configure(text="Reviewing... please wait")
+    app.update()
+
     code = code_input.get("1.0", "end")
     language = language_menu.get()
     result = review_code(code, language=language)
@@ -61,6 +68,8 @@ def on_review_click():
     output_box.delete("1.0", "end")
     output_box.insert("1.0", result)
     output_box.configure(state="disabled")
+
+    status_label.configure(text="")
 
 
 # Review button
