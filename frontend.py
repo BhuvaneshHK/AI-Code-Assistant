@@ -3,9 +3,13 @@ from backend import review_code
 from tkinter import filedialog
 import re
 
+from database import init_db, save_review
+
 app = ctk.CTk()
 app.title("AI Code Review Assistant")
 app.geometry("800x750")
+
+init_db()
 
 # Label above the input box
 input_label = ctk.CTkLabel(app, text="Paste your code below:")
@@ -68,6 +72,8 @@ def on_review_click():
     output_box.delete("1.0", "end")
     output_box.insert("1.0", result)
     output_box.configure(state="disabled")
+
+    save_review(code, language, result)
 
     status_label.configure(text="")
 
