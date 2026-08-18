@@ -6,7 +6,7 @@ A desktop application that reviews source code using Google's Gemini AI and prov
 
 ## Why I Built This
 
-I built this project to learn how to integrate a large language model into a real, working application — not just experiment with an API in isolation. Through building it, I gained hands-on experience with API integration, prompt design, error handling, desktop GUI development with CustomTkinter, and using SQLite to persist data locally. It also taught me how to debug real-world issues, from deprecated libraries to API key format changes, that don't show up in tutorials.
+This is my first project and I built this to learn how to integrate a large language model into a real, working application — not just experiment with an API in isolation. Through building it, I gained hands-on experience with API integration, prompt design, error handling, desktop GUI development with CustomTkinter, and using SQLite to persist data locally. It also taught me how to debug real-world issues, from deprecated libraries to API key format changes, that don't show up in tutorials.
 
 ---
 
