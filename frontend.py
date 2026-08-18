@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from backend import review_code
+from tkinter import filedialog
 import re
 
 app = ctk.CTk()
@@ -13,6 +14,23 @@ input_label.pack(pady=(10, 0))
 # Text box for pasting code
 code_input = ctk.CTkTextbox(app, width=700, height=300)
 code_input.pack(pady=10)
+
+
+# Opens a file picker, reads the selected file, and loads it into the code box
+def upload_file():
+    file_path = filedialog.askopenfilename(
+        filetypes=[("Code files", "*.py *.java *.cpp *.js *.cs *.txt"), ("All files", "*.*")]
+    )
+    if file_path:
+        with open(file_path, "r") as f:
+            content = f.read()
+        code_input.delete("1.0", "end")
+        code_input.insert("1.0", content)
+
+
+# Upload button
+upload_button = ctk.CTkButton(app, text="Upload File", command=upload_file)
+upload_button.pack(pady=(0, 10))
 
 # Language dropdown
 language_menu = ctk.CTkOptionMenu(app, values=["Python", "Java", "C++", "JavaScript", "C#"])
